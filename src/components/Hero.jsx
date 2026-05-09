@@ -257,7 +257,7 @@ export default function Hero() {
 
           {/* Photo container */}
           <div
-            className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden animate-float"
+            className="relative w-64 h-64 lg:w-[500px] lg:h-[500px] rounded-full overflow-hidden animate-float"
             style={{
               background: 'linear-gradient(135deg, rgba(0,212,255,0.2), rgba(124,58,237,0.2))',
               boxShadow: '0 0 60px rgba(0,212,255,0.2), 0 0 120px rgba(124,58,237,0.1)',
@@ -269,8 +269,8 @@ export default function Hero() {
             <img
               src={photo1}
               alt="Debjit Paul"
-              className="w-full h-full object-cover object-top scale-110"
-              style={{ filter: 'brightness(0.9) contrast(1.05)' }}
+              className="w-full h-full object-cover object-top scale-97 "
+              style={{ filter: 'brightness(0.9) contrast(1.05)', objectPosition: 'center 40%',}}
             />
             {/* Gradient overlay */}
             <div
@@ -281,22 +281,6 @@ export default function Hero() {
             />
           </div>
 
-          {/* Floating badge */}
-          <div
-            className="absolute bottom-4 left-0 px-4 py-3 rounded-2xl glass card-gradient-border animate-float"
-            style={{ animationDelay: '1s' }}
-          >
-            <div className="text-xs text-white/40" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Based in</div>
-            <div className="text-sm font-semibold text-white" style={{ fontFamily: 'DM Sans, sans-serif' }}>📍 Jodhpur, India</div>
-          </div>
-
-          <div
-            className="absolute top-8 right-0 lg:-right-4 px-4 py-3 rounded-2xl glass card-gradient-border animate-float"
-            style={{ animationDelay: '3s' }}
-          >
-            <div className="text-xs text-white/40" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Experience</div>
-            <div className="text-sm font-semibold text-white" style={{ fontFamily: 'DM Sans, sans-serif' }}>1+ Year 🚀</div>
-          </div>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { personal } from '../data/portfolio'
 
@@ -55,19 +56,73 @@ export default function Contact() {
   const [formRef, formIn] = useScrollReveal(0.1)
   const [infoRef, infoIn] = useScrollReveal(0.1)
 
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState(null) // 'sending' | 'sent' | 'error'
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  })
 
-  const handleChange = (e) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }))
+  const [status, setStatus] = useState(null)
+
+  const handleChange = (e) =>
+    setFormData((p) => ({
+      ...p,
+      [e.target.name]: e.target.value,
+    }))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     setStatus('sending')
-    // Simulate sending (replace with real EmailJS or API call)
-    await new Promise(r => setTimeout(r, 1500))
-    setStatus('sent')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setTimeout(() => setStatus(null), 4000)
+
+    try {
+      // MAIL TO YOU
+      await emailjs.send(
+        'service_bide6w8',
+        'template_lfy0m8j',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        '28YleKfWOh2VRh1xi'
+      )
+
+      // AUTO REPLY TO USER
+      await emailjs.send(
+        'service_bide6w8',
+        'template_ri6ql5g',
+        {
+          to_name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        '28YleKfWOh2VRh1xi'
+      )
+
+      setStatus('sent')
+
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      })
+
+      setTimeout(() => {
+        setStatus(null)
+      }, 3000)
+    } catch (error) {
+      console.log(error)
+      setStatus('error')
+
+      setTimeout(() => {
+        setStatus(null)
+      }, 3000)
+    }
   }
 
   const inputStyle = {
@@ -86,97 +141,208 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       {/* Orbs */}
-      <div className="orb orb-cyan absolute" style={{ width: 500, height: 500, top: 0, right: '-10%', opacity: 0.05 }} />
-      <div className="orb orb-purple absolute" style={{ width: 300, height: 300, bottom: '10%', left: '5%', opacity: 0.06 }} />
+      <div
+        className="orb orb-cyan absolute"
+        style={{
+          width: 500,
+          height: 500,
+          top: 0,
+          right: '-10%',
+          opacity: 0.05,
+        }}
+      />
+
+      <div
+        className="orb orb-purple absolute"
+        style={{
+          width: 300,
+          height: 300,
+          bottom: '10%',
+          left: '5%',
+          opacity: 0.06,
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div
           ref={titleRef}
-          className={`text-center mb-20 transition-all duration-700 ${titleIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          className={`text-center mb-20 transition-all duration-700 ${titleIn
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8'
+            }`}
         >
           <div className="section-label mb-4">05 — LET'S TALK</div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'Syne, sans-serif' }}>
+
+          <h2
+            className="text-4xl lg:text-5xl font-bold text-white mb-4"
+            style={{ fontFamily: 'Syne, sans-serif' }}
+          >
             Get In{' '}
-            <span style={{ background: 'linear-gradient(135deg, #00d4ff, #7c3aed)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <span
+              style={{
+                background:
+                  'linear-gradient(135deg, #00d4ff, #7c3aed)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
               Touch
             </span>
           </h2>
-          <p className="text-white/40 text-base max-w-xl mx-auto" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-            I'm always open to discussing new opportunities, interesting projects, or just a friendly chat about tech.
+
+          <p
+            className="text-white/40 text-base max-w-xl mx-auto"
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            I'm always open to discussing new opportunities,
+            interesting projects, or just a friendly chat about tech.
           </p>
-          <div className="mx-auto mt-4" style={{ width: 60, height: 3, background: 'linear-gradient(90deg, #00d4ff, #7c3aed)', borderRadius: 2 }} />
+
+          <div
+            className="mx-auto mt-4"
+            style={{
+              width: 60,
+              height: 3,
+              background:
+                'linear-gradient(90deg, #00d4ff, #7c3aed)',
+              borderRadius: 2,
+            }}
+          />
         </div>
 
         <div className="grid lg:grid-cols-5 gap-10 items-start">
           {/* Contact Info */}
           <div
             ref={infoRef}
-            className={`lg:col-span-2 space-y-4 transition-all duration-700 ${infoIn ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+            className={`lg:col-span-2 space-y-4 transition-all duration-700 ${infoIn
+              ? 'opacity-100 translate-x-0'
+              : 'opacity-0 -translate-x-10'
+              }`}
           >
             {/* Intro card */}
             <div className="rounded-2xl p-6 glass card-gradient-border mb-6">
-              <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Syne, sans-serif' }}>
+              <h3
+                className="text-xl font-bold text-white mb-3"
+                style={{ fontFamily: 'Syne, sans-serif' }}
+              >
                 Ready to build something great?
               </h3>
-              <p className="text-white/45 text-sm leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                Whether you have a project in mind, a job opportunity, or just want to connect — my inbox is always open.
+
+              <p
+                className="text-white/45 text-sm leading-relaxed"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                Whether you have a project in mind, a job
+                opportunity, or just want to connect — my inbox is
+                always open.
               </p>
 
-              {/* Availability indicator */}
               <div className="flex items-center gap-3 mt-5 pt-5 border-t border-white/5">
                 <div className="relative">
                   <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                   <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-400 animate-ping opacity-60" />
                 </div>
-                <span className="text-sm text-white/50" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+
+                <span
+                  className="text-sm text-white/50"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
                   Currently available for new opportunities
                 </span>
               </div>
             </div>
 
             {/* Contact cards */}
-            {contactInfo.map(({ icon, label, value, href, color }, i) => (
-              <a
-                key={label}
-                href={href || undefined}
-                target={href?.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
-                className={`flex items-center gap-4 rounded-xl p-4 glass transition-all duration-300 hover:-translate-y-0.5 ${href ? 'cursor-pointer' : 'cursor-default'}`}
-                style={{
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  transitionDelay: `${i * 80}ms`,
-                  opacity: infoIn ? 1 : 0,
-                  transform: infoIn ? 'none' : 'translateX(-20px)',
-                  transition: 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease',
-                }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = `${color}40`}
-                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: `${color}15`, color }}
+            {contactInfo.map(
+              ({ icon, label, value, href, color }, i) => (
+                <a
+                  key={label}
+                  href={href || undefined}
+                  target={
+                    href?.startsWith('http')
+                      ? '_blank'
+                      : undefined
+                  }
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-4 rounded-xl p-4 glass transition-all duration-300 hover:-translate-y-0.5 ${href
+                    ? 'cursor-pointer'
+                    : 'cursor-default'
+                    }`}
+                  style={{
+                    border:
+                      '1px solid rgba(255,255,255,0.06)',
+                    transitionDelay: `${i * 80}ms`,
+                    opacity: infoIn ? 1 : 0,
+                    transform: infoIn
+                      ? 'none'
+                      : 'translateX(-20px)',
+                    transition:
+                      'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease',
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.borderColor = `${color}40`)
+                  }
+                  onMouseLeave={(e) =>
+                  (e.currentTarget.style.borderColor =
+                    'rgba(255,255,255,0.06)')
+                  }
                 >
-                  {icon}
-                </div>
-                <div>
-                  <div className="text-xs text-white/30 mb-0.5" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{label}</div>
-                  <div className="text-sm text-white/70" style={{ fontFamily: 'DM Sans, sans-serif' }}>{value}</div>
-                </div>
-              </a>
-            ))}
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{
+                      background: `${color}15`,
+                      color,
+                    }}
+                  >
+                    {icon}
+                  </div>
+
+                  <div>
+                    <div
+                      className="text-xs text-white/30 mb-0.5"
+                      style={{
+                        fontFamily:
+                          'JetBrains Mono, monospace',
+                      }}
+                    >
+                      {label}
+                    </div>
+
+                    <div
+                      className="text-sm text-white/70"
+                      style={{
+                        fontFamily: 'DM Sans, sans-serif',
+                      }}
+                    >
+                      {value}
+                    </div>
+                  </div>
+                </a>
+              )
+            )}
           </div>
 
           {/* Contact Form */}
           <div
             ref={formRef}
-            className={`lg:col-span-3 transition-all duration-700 delay-200 ${formIn ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+            className={`lg:col-span-3 transition-all duration-700 delay-200 ${formIn
+              ? 'opacity-100 translate-x-0'
+              : 'opacity-0 translate-x-10'
+              }`}
           >
             <div className="rounded-2xl p-8 glass card-gradient-border">
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5"
+              >
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="section-label block mb-2">Name</label>
+                    <label className="section-label block mb-2">
+                      Name
+                    </label>
+
                     <input
                       type="text"
                       name="name"
@@ -185,12 +351,14 @@ export default function Contact() {
                       placeholder="Your name"
                       required
                       style={inputStyle}
-                      onFocus={e => { e.target.style.borderColor = 'rgba(0,212,255,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,212,255,0.08)' }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none' }}
                     />
                   </div>
+
                   <div>
-                    <label className="section-label block mb-2">Email</label>
+                    <label className="section-label block mb-2">
+                      Email
+                    </label>
+
                     <input
                       type="email"
                       name="email"
@@ -199,14 +367,15 @@ export default function Contact() {
                       placeholder="your@email.com"
                       required
                       style={inputStyle}
-                      onFocus={e => { e.target.style.borderColor = 'rgba(0,212,255,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,212,255,0.08)' }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none' }}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="section-label block mb-2">Subject</label>
+                  <label className="section-label block mb-2">
+                    Subject
+                  </label>
+
                   <input
                     type="text"
                     name="subject"
@@ -215,13 +384,14 @@ export default function Contact() {
                     placeholder="Project opportunity / Collaboration..."
                     required
                     style={inputStyle}
-                    onFocus={e => { e.target.style.borderColor = 'rgba(0,212,255,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,212,255,0.08)' }}
-                    onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none' }}
                   />
                 </div>
 
                 <div>
-                  <label className="section-label block mb-2">Message</label>
+                  <label className="section-label block mb-2">
+                    Message
+                  </label>
+
                   <textarea
                     name="message"
                     value={formData.message}
@@ -229,41 +399,105 @@ export default function Contact() {
                     placeholder="Tell me about your project or idea..."
                     required
                     rows={6}
-                    style={{ ...inputStyle, resize: 'vertical', minHeight: 140 }}
-                    onFocus={e => { e.target.style.borderColor = 'rgba(0,212,255,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,212,255,0.08)' }}
-                    onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none' }}
+                    style={{
+                      ...inputStyle,
+                      resize: 'vertical',
+                      minHeight: 140,
+                    }}
                   />
                 </div>
 
+                {/* SUCCESS MESSAGE */}
+                {status === 'sent' && (
+                  <div
+                    className="flex items-center gap-3 p-4 rounded-xl"
+                    style={{
+                      background:
+                        'rgba(0,255,136,0.08)',
+                      border:
+                        '1px solid rgba(0,255,136,0.25)',
+                    }}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-green-400 flex items-center justify-center text-black font-bold">
+                      ✓
+                    </div>
+
+                    <div>
+                      <div className="text-green-300 font-medium">
+                        Message Sent Successfully
+                      </div>
+
+                      <div className="text-white/50 text-sm">
+                        I’ll connect with you soon.
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ERROR MESSAGE */}
+                {status === 'error' && (
+                  <div
+                    className="p-4 rounded-xl text-red-300"
+                    style={{
+                      background:
+                        'rgba(255,0,0,0.08)',
+                      border:
+                        '1px solid rgba(255,0,0,0.25)',
+                    }}
+                  >
+                    Failed to send message. Try again.
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={status === 'sending' || status === 'sent'}
-                  className="w-full py-4 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-1 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+                  disabled={status === 'sending'}
+                  className="w-full py-4 rounded-xl font-semibold text-sm transition-all duration-300 hover:-translate-y-1 disabled:opacity-60"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
-                    background: status === 'sent'
-                      ? 'linear-gradient(135deg, #00ff88, #00d4ff)'
-                      : 'linear-gradient(135deg, #00d4ff, #7c3aed)',
+                    background:
+                      'linear-gradient(135deg, #00d4ff, #7c3aed)',
                     color: '#fff',
-                    boxShadow: '0 0 40px rgba(0,212,255,0.25)',
+                    boxShadow:
+                      '0 0 40px rgba(0,212,255,0.25)',
                   }}
                 >
                   {status === 'sending' ? (
                     <span className="flex items-center justify-center gap-2">
-                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                      <svg
+                        className="w-4 h-4 animate-spin"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                        />
                       </svg>
+
                       Sending...
                     </span>
-                  ) : status === 'sent' ? (
-                    '✓ Message Sent Successfully!'
                   ) : (
                     'Send Message →'
                   )}
                 </button>
 
-                <p className="text-center text-xs text-white/25" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <p
+                  className="text-center text-xs text-white/25"
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                  }}
+                >
                   I typically respond within 24 hours
                 </p>
               </form>

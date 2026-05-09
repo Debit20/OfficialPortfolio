@@ -2,18 +2,6 @@
 
 A stunning dark-themed portfolio built with **Vite + React + Tailwind CSS + Ant Design**.
 
-## ✨ Features
-
-- Full-dark aesthetic with `#050508` base background
-- Soft cyan (`#00d4ff`) × violet (`#7c3aed`) × ember (`#ff6b35`) gradient palette
-- Smooth scroll-reveal animations on every section
-- Typewriter hero tagline effect
-- Parallax mouse-tracking on the hero
-- Animated skill progress bars (trigger on scroll)
-- Glass-morphism cards with gradient borders
-- Custom cursor with magnetic ring (desktop)
-- Responsive for mobile, tablet, desktop
-- Grid background texture + noise overlay
 
 ## 📁 File Structure
 

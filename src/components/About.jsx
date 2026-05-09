@@ -58,7 +58,7 @@ export default function About() {
             <div className="relative">
               {/* Main photo */}
               <div
-                className="relative rounded-3xl overflow-hidden"
+                className="relative rounded-3xl overflow-hidden lg:h-[680px]"
                 style={{
                   border: '1px solid rgba(0,212,255,0.15)',
                   boxShadow: '0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,212,255,0.08)',
@@ -67,8 +67,8 @@ export default function About() {
                 <img
                   src={photo2}
                   alt="Debjit Paul professional"
-                  className="w-full object-cover"
-                  style={{ height: 460, objectPosition: 'center top', filter: 'brightness(0.9)' }}
+                  className="w-full h-full object-cover"
+                  style={{  objectPosition: 'center top', filter: 'brightness(0.9)' }}
                 />
                 {/* Subtle gradient overlay */}
                 <div
@@ -79,50 +79,6 @@ export default function About() {
                 />
               </div>
 
-              {/* Floating code snippet card */}
-              <div
-                className="absolute -right-6 top-10 rounded-2xl glass card-gradient-border p-4 text-left"
-                style={{ minWidth: 180 }}
-              >
-                <div
-                  className="text-xs text-white/40 mb-2"
-                  style={{ fontFamily: 'JetBrains Mono, monospace' }}
-                >
-                  {'// Current stack'}
-                </div>
-                {['React.js', 'ASP.NET Core', 'MongoDB'].map((t, i) => (
-                  <div
-                    key={t}
-                    className="flex items-center gap-2 text-xs mb-1"
-                    style={{ fontFamily: 'JetBrains Mono, monospace' }}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: ['#00d4ff', '#a855f7', '#00ff88'][i] }}
-                    />
-                    <span className="text-white/70">{t}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CGPA badge */}
-              <div
-                className="absolute -left-4 bottom-10 rounded-2xl glass card-gradient-border px-5 py-4 text-center"
-              >
-                <div
-                  className="text-3xl font-bold mb-0.5"
-                  style={{
-                    fontFamily: 'Syne, sans-serif',
-                    background: 'linear-gradient(135deg, #00d4ff, #a855f7)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  8.79
-                </div>
-                <div className="text-xs text-white/40" style={{ fontFamily: 'DM Sans, sans-serif' }}>CGPA</div>
-              </div>
             </div>
           </div>
 
