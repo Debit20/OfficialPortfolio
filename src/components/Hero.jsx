@@ -55,7 +55,7 @@ export default function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden grid-bg"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden grid-bg "
     >
       {/* Background Orbs */}
       <div

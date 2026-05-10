@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import plogo from '../assets/plogo.gif'
 const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
@@ -64,7 +64,7 @@ export default function Navbar() {
                 backgroundClip: 'text',
               }}
             >
-              DP
+             <img className ="w-14 rounded-full" src={plogo}/> 
             </span>
             <span
               className="absolute -bottom-1 left-0 h-px w-0 group-hover:w-full transition-all duration-300"

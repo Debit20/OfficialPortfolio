@@ -95,17 +95,6 @@ The form is wired with a simulated delay. To connect real email sending:
 1. Install [EmailJS](https://emailjs.com): `npm install @emailjs/browser`
 2. Replace the simulated `await` in `Contact.jsx → handleSubmit` with your EmailJS call.
 
-## 🎨 Design Decisions
-
-| Element | Choice | Why |
-|---|---|---|
-| Background | `#050508` | Deeper than pure black, avoids harsh contrast |
-| Primary accent | `#00d4ff` (cyan) | Tech-forward, crisp on dark |
-| Secondary | `#7c3aed` (violet) | Sophisticated depth |
-| Highlight | `#00ff88` (green) | "Online / Available" feel |
-| Fonts | Syne (headings) + DM Sans (body) + JetBrains Mono (code/labels) | Distinctive without being gimmicky |
-| Animations | CSS transitions + IntersectionObserver | No heavy lib, smooth 60fps |
-
 ## 📦 Dependencies
 
 | Package | Purpose |
