@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-const logoreveal = 'https://res.cloudinary.com/dieyjf139/video/upload/v1778401663/mylogoreveal_py0la3.mp4';
+const logoreveal = 'https://res.cloudinary.com/dieyjf139/video/upload/v1779008046/portfolioAnimation_eoxi6y.mp4';
 export default function VideoLoader({ onFinish }) {
   const videoRef = useRef(null)
 
